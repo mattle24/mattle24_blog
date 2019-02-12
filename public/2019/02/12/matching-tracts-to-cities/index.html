@@ -27,8 +27,8 @@
 
 
 
-<link rel="stylesheet" href="../../../../mattle24_blog/public/css/fonts.css" media="all">
-<link rel="stylesheet" href="../../../../mattle24_blog/public/css/main.css" media="all">
+<link rel="stylesheet" href="/mattle24_blog/public/css/fonts.css" media="all">
+<link rel="stylesheet" href="/mattle24_blog/public/css/main.css" media="all">
 
 <link rel = "stylesheet" type = "text//css" href = "https://github.com/mattle24/mattle24.github.io/blob/master/style.css">
 
@@ -37,8 +37,8 @@
     <div class="wrapper">
       <header class="header">
         <nav class="nav">
-  <a href="../../../../mattle24_blog/public/" class="nav-logo">
-    <img src="../../../../mattle24_blog/public/images/%3cnil%3e"
+  <a href="/mattle24_blog/public/" class="nav-logo">
+    <img src="/mattle24_blog/public/images/%3cnil%3e"
          width=""
          height=""
          alt="">
@@ -46,9 +46,9 @@
 
   <ul class="nav-links">
     
-    <li><a href="../../../../mattle24_blog/public/mattle24_blog/public">All Posts</a></li>
+    <li><a href="/mattle24_blog/public/mattle24_blog/public">All Posts</a></li>
     
-    <li><a href="../../../../mattle24_blog/public/">Home</a></li>
+    <li><a href="/mattle24_blog/public/">Home</a></li>
     
   </ul>
 </nav>
@@ -112,7 +112,7 @@ ggplot(indianapolis) +
   coord_sf(datum = NA) +
   theme(plot.title = element_text(hjust = 0.5)) +
   labs(title = &quot;Indianapolis&quot;)</code></pre>
-<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Now, let’s match the tracts. First, I tried <code>st_covers()</code> (a helpful <a href="https://github.com/rstudio/cheatsheets/blob/master/sf.pdf"><code>sf</code> cheatsheet is available</a> for these functions).</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if Indianapolis covers it
 covers_matrix &lt;- st_covers(indianapolis, ind_tracts, sparse = FALSE)
@@ -123,7 +123,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(covers_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
 <p><code>st_covers()</code> did an okay job, but I was missing all of the tracts with any area outside of Indianapolis. Next, I tried <code>st_intersects()</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 intersects_matrix &lt;- st_intersects(indianapolis, ind_tracts, sparse = FALSE)
@@ -134,7 +134,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p><code>st_intersects()</code> was better, but still problematic. It picked up all of the tracts inside of Indianapolis, but also all of the tracts bordering Indianapolis. To rememedy this, I used <code>st_intersection()</code>. To simplify, I’m going to use the subset of the tracts defined by <code>st_intersects()</code> instead of the full <code>ind_tracts</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 ind_tracts_intersection &lt;- st_intersection(indianapolis, ind_tracts[t(intersects_matrix), ])</code></pre>
@@ -145,7 +145,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts_intersection, color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Unlike the previous two functions, <code>st_intersection()</code> returns an <code>sf</code> object. The function seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new <code>sf</code> object contains all of the tracts as the <code>sf</code> object indexed by <code>intersects_matrix</code>, including the ones that lo longer have any significant area.</p>
 <pre class="r"><code>nrow(ind_tracts_intersection) == nrow(ind_tracts[t(intersects_matrix), ])</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -157,7 +157,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ][x, ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA) </code></pre>
-<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="calculating-the-dissimilarity-index" class="section level2">
 <h2>Calculating the dissimilarity index</h2>
@@ -204,10 +204,10 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
       <footer class="footer">
         <ul class="footer-links">
           <li>
-            <a href="../../../../mattle24_blog/public/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+            <a href="/mattle24_blog/public/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
           </li>
           <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../mattle24_blog/public/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/mattle24_blog/public/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
       </footer>
@@ -228,7 +228,7 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
 
 
     
-<script src="../../../../mattle24_blog/public/js/math-code.js"></script>
+<script src="/mattle24_blog/public/js/math-code.js"></script>
 <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
