@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://mattle24.github.io/mattle24_blog"
 languageCode = "en-us"
 title = "A Hugo website"
 theme = "hugo-lithium"
@@ -10,17 +10,14 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     post = "/:year/:month/:day/:slug/"
 
 [[menu.main]]
-    name = "About"
-    url = "/about/"
+    name = "Home"
+    url = "/"
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/rstudio/blogdown"
-[[menu.main]]
-    name = "Twitter"
-    url = "https://twitter.com/rstudio"
+    url = "https://github.com/mattle24"
 
 [params]
-    description = "A website built through Hugo and blogdown."
+    description = ""
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"
@@ -32,11 +29,4 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     MathJaxVersion = "2.7.5"
 
     # path to the favicon, under "static"
-    favicon = "favicon.ico"
-
-    [params.logo]
-    url = "logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
-
+    favicon = "https://avatars1.githubusercontent.com/u/10014947?s=460&v=4"
