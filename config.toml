@@ -12,11 +12,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [[menu.main]]
     name = "All Posts"
-    url = "/mattle24_blog/public"
+    url = "/"
     weight = 1
 [[menu.main]]
     name = "Home"
-    url = "/"
+    url = "../../"
     weight = 2
 
 [params]
