@@ -3,83 +3,83 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/mattle24_blog/2019/02/12/matching-tracts-to-cities/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/2019/02/12/matching-tracts-to-cities/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/mattle24_blog/</loc>
-    <lastmod>2019-02-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/mattle24_blog/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/mattle24_blog/tags/data-science/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/dissimilarity-index/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/data-science/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/post/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/dissimilarity-index/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/r/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/post/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/categories/r/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/r/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/rstats/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/categories/r/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/sf/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/rstats/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/spatial-data/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/sf/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/spatial-data/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/tracts/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/mattle24_blog/tags/us-census/</loc>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/tracts/</loc>
+    <lastmod>2019-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/us-census/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

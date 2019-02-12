@@ -10,7 +10,8 @@ This blog post is focused on how to match data from US Census tracts to US Censu
 
 However, the dissimilarity index requires matching sub-geomtries (neighborhoods) to macro geometries (places). I could not find any crosswalk table to link Census tracts, accepted as proxies for neighborhoods ^[Massey, Douglas, and Nancy Denton. 1998. American Apartheid: Segregation and the Making of the Underclass. Cambridge, MA: Harvard University Press. [Google Scholar](https://scholar.google.com/scholar_lookup?hl=en&publication_year=1998&author=Douglas+Massey&author=Nancy+Denton&title=American+Apartheid%3A+Segregation+and+the+Making+of+the+Underclass)], to places in 1970. For a while, I wrote off the task as impratically difficult. 
 
-As is often the case, all it took was learning about the right package. The [`sf`](https://github.com/r-spatial/sf) package provided me with all of the tools I needed, given shapefiles of both the tracts and places. In my research, I used data from [IMPUS NHGIS](nhgis.org), which has been an invaluable resource during this project. However, to keep this example easily accessible, I will instead use tract data from the American Community Survey via [`tidycensus`](https://github.com/walkerke/tidycensus) and place boundaries from [`tigris`](https://github.com/walkerke/tigris). Using `tidycensus` does require requesting a free API key, which you can do [here](https://api.census.gov/data/key_signup.html). 
+As is often the case, all it took was learning about the right package. The [`sf`](https://github.com/r-spatial/sf) package provided me with all of the tools I needed to match tracts to places. In my research, I use data from [IMPUS NHGIS](nhgis.org), which has been an invaluable resource. However, to keep this example easily accessible, I will instead use tract data from the American Community Survey via [`tidycensus`](https://github.com/walkerke/tidycensus) and place boundaries from [`tigris`](https://github.com/walkerke/tigris). Using `tidycensus` does require requesting a free API key from the US Census, which you can do [here](https://api.census.gov/data/key_signup.html). 
+
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
@@ -46,7 +47,7 @@ ind_tracts <- tidycensus::get_acs(state = "IN", geography = "tract",
 ind_places <- tigris::places("IN")
 ```
 
-The tracts are in tidy format, with one row for variable `B02001_002E` (population white) and another row for `B02001_003E` (populaiton black/ Africa American) but I want both variables in one row per tract. 
+The tracts are in tidy format, with one row for variable `B02001_002E` (population white) and another row for `B02001_003E` (population black/ African American) but I wanted both variables in one row per tract. 
 
 ```{r}
 ind_tracts <- ind_tracts %>% 
@@ -57,7 +58,7 @@ ind_tracts <- ind_tracts %>%
 
 ## Geo-analysis
 
-To simplify the example, I'm going to isolate one city to see how tracts and places match. Since my research is focused on Indianapolis, I will use that as the example. First, let's look at Indianapolis by itself.
+To simplify the example, I isolated one city to see how tracts and places match. Since my research is focused on Indianapolis, I used that as the example. To start, I mapped Indianapolis by itself to get a sense of what to expect.
 
 ```{r}
 indianapolis <- ind_places %>% 
@@ -70,7 +71,7 @@ ggplot(indianapolis) +
   labs(title = "Indianapolis")
 ```
 
-Now, let's match the tracts. First, I'll try `st_covers()` (a helpful [`sf` cheatsheet is available](https://github.com/rstudio/cheatsheets/blob/master/sf.pdf) for these functions). 
+Now, let's match the tracts. First, I tried `st_covers()` (a helpful [`sf` cheatsheet is available](https://github.com/rstudio/cheatsheets/blob/master/sf.pdf) for these functions). 
 
 ```{r st_covers}
 # get a matrix of one row with a logical column for each tract, TRUE if Indianapolis covers it
@@ -84,7 +85,7 @@ ggplot(indianapolis) +
   coord_sf(datum = NA)
 ```
 
-`st_covers()` does an okay job, but I'm missing all of the tracts with area outside of the place Indianapolis. Next, I tried `st_intersects()`.
+`st_covers()` did an okay job, but I was missing all of the tracts with any area outside of Indianapolis. Next, I tried `st_intersects()`.
 
 ```{r}
 # get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
@@ -98,7 +99,7 @@ ggplot(indianapolis) +
   coord_sf(datum = NA)
 ```
 
-`st_intersects()` was better, but still problematic. It picked up all of the tracts inside of Indianapolis, which is great, but also all of the tracts bordering Indianapolis. To rememedy this, I used `st_intersection()`. Unlike the previous two functions, `st_intersection()` returns an `sf` object. To simplify, I'm going to use the subset of the tracts defined by `st_intersects()` instead of the full `ind_tracts`.
+`st_intersects()` was better, but still problematic. It picked up all of the tracts inside of Indianapolis, but also all of the tracts bordering Indianapolis. To rememedy this, I used `st_intersection()`. To simplify, I'm going to use the subset of the tracts defined by `st_intersects()` instead of the full `ind_tracts`.
 
 ```{r}
 # get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
@@ -111,7 +112,7 @@ ggplot(indianapolis) +
   coord_sf(datum = NA)
 ```
 
-`st_intersection()` seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new `sf` object contains all of the tracts as the `sf` object indexed by `intersects_matrix`.
+Unlike the previous two functions, `st_intersection()` returns an `sf` object. The function seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new `sf` object contains all of the tracts as the `sf` object indexed by `intersects_matrix`, including the ones that lo longer have any significant area.
 
 ```{r, results=TRUE}
 nrow(ind_tracts_intersection) == nrow(ind_tracts[t(intersects_matrix), ])

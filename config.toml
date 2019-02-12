@@ -1,4 +1,5 @@
-baseurl = "https://mattle24.github.io/mattle24_blog"
+baseurl = "http://127.0.0.1:3000/mattle24_blog/public"
+relativeURLs = true
 languageCode = "en-us"
 title = "A Hugo website"
 theme = "hugo-lithium"
@@ -10,11 +11,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     post = "/:year/:month/:day/:slug/"
 
 [[menu.main]]
+    name = "All Posts"
+    url = "/mattle24_blog/public"
+    weight = 1
+[[menu.main]]
     name = "Home"
     url = "/"
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/mattle24"
+    weight = 2
 
 [params]
     description = ""

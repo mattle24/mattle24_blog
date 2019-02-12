@@ -27,8 +27,8 @@
 
 
 
-<link rel="stylesheet" href="/mattle24_blog/css/fonts.css" media="all">
-<link rel="stylesheet" href="/mattle24_blog/css/main.css" media="all">
+<link rel="stylesheet" href="../../../../mattle24_blog/public/css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../mattle24_blog/public/css/main.css" media="all">
 
 <link rel = "stylesheet" type = "text//css" href = "https://github.com/mattle24/mattle24.github.io/blob/master/style.css">
 
@@ -37,8 +37,8 @@
     <div class="wrapper">
       <header class="header">
         <nav class="nav">
-  <a href="/mattle24_blog/" class="nav-logo">
-    <img src="/mattle24_blog/images/%3cnil%3e"
+  <a href="../../../../mattle24_blog/public/" class="nav-logo">
+    <img src="../../../../mattle24_blog/public/images/%3cnil%3e"
          width=""
          height=""
          alt="">
@@ -46,9 +46,9 @@
 
   <ul class="nav-links">
     
-    <li><a href="https://github.com/mattle24">GitHub</a></li>
+    <li><a href="../../../../mattle24_blog/public/">All Posts</a></li>
     
-    <li><a href="/mattle24_blog/">Home</a></li>
+    <li><a href="../../../../mattle24_blog/public/">Home</a></li>
     
   </ul>
 </nav>
@@ -75,7 +75,7 @@
 
 <p>This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the <a href="https://www.census.gov/hhes/www/housing/resseg/pdf/app_b.pdf">dissimilarity index</a>, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.</p>
 <p>However, the dissimilarity index requires matching sub-geomtries (neighborhoods) to macro geometries (places). I could not find any crosswalk table to link Census tracts, accepted as proxies for neighborhoods <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, to places in 1970. For a while, I wrote off the task as impratically difficult.</p>
-<p>As is often the case, all it took was learning about the right package. The <a href="https://github.com/r-spatial/sf"><code>sf</code></a> package provided me with all of the tools I needed, given shapefiles of both the tracts and places. In my research, I used data from <a href="nhgis.org">IMPUS NHGIS</a>, which has been an invaluable resource during this project. However, to keep this example easily accessible, I will instead use tract data from the American Community Survey via <a href="https://github.com/walkerke/tidycensus"><code>tidycensus</code></a> and place boundaries from <a href="https://github.com/walkerke/tigris"><code>tigris</code></a>. Using <code>tidycensus</code> does require requesting a free API key, which you can do <a href="https://api.census.gov/data/key_signup.html">here</a>.</p>
+<p>As is often the case, all it took was learning about the right package. The <a href="https://github.com/r-spatial/sf"><code>sf</code></a> package provided me with all of the tools I needed to match tracts to places. In my research, I use data from <a href="nhgis.org">IMPUS NHGIS</a>, which has been an invaluable resource. However, to keep this example easily accessible, I will instead use tract data from the American Community Survey via <a href="https://github.com/walkerke/tidycensus"><code>tidycensus</code></a> and place boundaries from <a href="https://github.com/walkerke/tigris"><code>tigris</code></a>. Using <code>tidycensus</code> does require requesting a free API key from the US Census, which you can do <a href="https://api.census.gov/data/key_signup.html">here</a>.</p>
 <div id="packages-and-setup" class="section level2">
 <h2>Packages and setup</h2>
 <pre class="r"><code>library(sf)
@@ -95,7 +95,7 @@ ind_tracts &lt;- tidycensus::get_acs(state = &quot;IN&quot;, geography = &quot;t
                   variables = c(&quot;B02001_002E&quot;, &quot;B02001_003E&quot;), geometry = TRUE)
 
 ind_places &lt;- tigris::places(&quot;IN&quot;)</code></pre>
-<p>The tracts are in tidy format, with one row for variable <code>B02001_002E</code> (population white) and another row for <code>B02001_003E</code> (populaiton black/ Africa American) but I want both variables in one row per tract.</p>
+<p>The tracts are in tidy format, with one row for variable <code>B02001_002E</code> (population white) and another row for <code>B02001_003E</code> (population black/ African American) but I wanted both variables in one row per tract.</p>
 <pre class="r"><code>ind_tracts &lt;- ind_tracts %&gt;% 
   select(-moe) %&gt;% 
   spread(key = variable, value = estimate) %&gt;% 
@@ -103,7 +103,7 @@ ind_places &lt;- tigris::places(&quot;IN&quot;)</code></pre>
 </div>
 <div id="geo-analysis" class="section level2">
 <h2>Geo-analysis</h2>
-<p>To simplify the example, I’m going to isolate one city to see how tracts and places match. Since my research is focused on Indianapolis, I will use that as the example. First, let’s look at Indianapolis by itself.</p>
+<p>To simplify the example, I isolated one city to see how tracts and places match. Since my research is focused on Indianapolis, I used that as the example. To start, I mapped Indianapolis by itself to get a sense of what to expect.</p>
 <pre class="r"><code>indianapolis &lt;- ind_places %&gt;% 
   filter(NAME == &quot;Indianapolis city (balance)&quot;)
 
@@ -112,8 +112,8 @@ ggplot(indianapolis) +
   coord_sf(datum = NA) +
   theme(plot.title = element_text(hjust = 0.5)) +
   labs(title = &quot;Indianapolis&quot;)</code></pre>
-<p><img src="/post/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Now, let’s match the tracts. First, I’ll try <code>st_covers()</code> (a helpful <a href="https://github.com/rstudio/cheatsheets/blob/master/sf.pdf"><code>sf</code> cheatsheet is available</a> for these functions).</p>
+<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Now, let’s match the tracts. First, I tried <code>st_covers()</code> (a helpful <a href="https://github.com/rstudio/cheatsheets/blob/master/sf.pdf"><code>sf</code> cheatsheet is available</a> for these functions).</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if Indianapolis covers it
 covers_matrix &lt;- st_covers(indianapolis, ind_tracts, sparse = FALSE)
 dim(covers_matrix)
@@ -123,8 +123,8 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(covers_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/post/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
-<p><code>st_covers()</code> does an okay job, but I’m missing all of the tracts with area outside of the place Indianapolis. Next, I tried <code>st_intersects()</code>.</p>
+<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
+<p><code>st_covers()</code> did an okay job, but I was missing all of the tracts with any area outside of Indianapolis. Next, I tried <code>st_intersects()</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 intersects_matrix &lt;- st_intersects(indianapolis, ind_tracts, sparse = FALSE)
 dim(intersects_matrix)
@@ -134,8 +134,8 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/post/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p><code>st_intersects()</code> was better, but still problematic. It picked up all of the tracts inside of Indianapolis, which is great, but also all of the tracts bordering Indianapolis. To rememedy this, I used <code>st_intersection()</code>. Unlike the previous two functions, <code>st_intersection()</code> returns an <code>sf</code> object. To simplify, I’m going to use the subset of the tracts defined by <code>st_intersects()</code> instead of the full <code>ind_tracts</code>.</p>
+<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><code>st_intersects()</code> was better, but still problematic. It picked up all of the tracts inside of Indianapolis, but also all of the tracts bordering Indianapolis. To rememedy this, I used <code>st_intersection()</code>. To simplify, I’m going to use the subset of the tracts defined by <code>st_intersects()</code> instead of the full <code>ind_tracts</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 ind_tracts_intersection &lt;- st_intersection(indianapolis, ind_tracts[t(intersects_matrix), ])</code></pre>
 <pre><code>## Warning: attribute variables are assumed to be spatially constant
@@ -145,8 +145,8 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts_intersection, color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/post/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p><code>st_intersection()</code> seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new <code>sf</code> object contains all of the tracts as the <code>sf</code> object indexed by <code>intersects_matrix</code>.</p>
+<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Unlike the previous two functions, <code>st_intersection()</code> returns an <code>sf</code> object. The function seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new <code>sf</code> object contains all of the tracts as the <code>sf</code> object indexed by <code>intersects_matrix</code>, including the ones that lo longer have any significant area.</p>
 <pre class="r"><code>nrow(ind_tracts_intersection) == nrow(ind_tracts[t(intersects_matrix), ])</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>My hacky solution was to look at the areas. In the trimmed <code>sf</code> object, the borderline tracts have area approximately 0% of their original area. I confirmed this by plotting the trimmed tracts with less than 1% of their original area.</p>
@@ -157,7 +157,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ][x, ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA) </code></pre>
-<p><img src="/post/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="../../../../mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="calculating-the-dissimilarity-index" class="section level2">
 <h2>Calculating the dissimilarity index</h2>
@@ -204,10 +204,10 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
       <footer class="footer">
         <ul class="footer-links">
           <li>
-            <a href="/mattle24_blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+            <a href="../../../../mattle24_blog/public/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
           </li>
           <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/mattle24_blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../mattle24_blog/public/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
           </li>
         </ul>
       </footer>
@@ -228,7 +228,7 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
 
 
     
-<script src="/mattle24_blog/js/math-code.js"></script>
+<script src="../../../../mattle24_blog/public/js/math-code.js"></script>
 <script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 

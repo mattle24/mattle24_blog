@@ -2,84 +2,84 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on A Hugo website</title>
-    <link>/mattle24_blog/tags/</link>
+    <link>http://127.0.0.1:3000/mattle24_blog/public/tags/</link>
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 12 Feb 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/mattle24_blog/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://127.0.0.1:3000/mattle24_blog/public/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Science</title>
-      <link>/mattle24_blog/tags/data-science/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/data-science/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/data-science/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/data-science/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dissimilarity Index</title>
-      <link>/mattle24_blog/tags/dissimilarity-index/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/dissimilarity-index/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/dissimilarity-index/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/dissimilarity-index/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/mattle24_blog/tags/r/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/r/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/r/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rstats</title>
-      <link>/mattle24_blog/tags/rstats/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/rstats/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/rstats/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/rstats/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sf</title>
-      <link>/mattle24_blog/tags/sf/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/sf/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/sf/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/sf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spatial Data</title>
-      <link>/mattle24_blog/tags/spatial-data/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/spatial-data/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/spatial-data/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/spatial-data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tracts</title>
-      <link>/mattle24_blog/tags/tracts/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/tracts/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/tracts/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/tracts/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Us Census</title>
-      <link>/mattle24_blog/tags/us-census/</link>
+      <link>http://127.0.0.1:3000/mattle24_blog/public/tags/us-census/</link>
       <pubDate>Tue, 12 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/mattle24_blog/tags/us-census/</guid>
+      <guid>http://127.0.0.1:3000/mattle24_blog/public/tags/us-census/</guid>
       <description></description>
     </item>
     
