@@ -1,4 +1,4 @@
-baseurl = "http://127.0.0.1:3000/blog"
+baseurl = "http://127.0.0.1:3000/mattle24_blog/public"
 relativeURLs = true
 languageCode = "en-us"
 title = "A Hugo website"
