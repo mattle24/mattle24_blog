@@ -8,12 +8,6 @@
   </url>
   
   <url>
-    <loc>http://127.0.0.1:3000/mattle24_blog/public/</loc>
-    <lastmod>2019-02-12T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://127.0.0.1:3000/mattle24_blog/public/categories/</loc>
     <priority>0</priority>
   </url>
@@ -26,6 +20,12 @@
   
   <url>
     <loc>http://127.0.0.1:3000/mattle24_blog/public/tags/dissimilarity-index/</loc>
+    <lastmod>2019-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://127.0.0.1:3000/mattle24_blog/public/</loc>
     <lastmod>2019-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
