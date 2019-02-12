@@ -16,7 +16,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     weight = 1
 [[menu.main]]
     name = "Home"
-    url = "../../"
+    url = "http://127.0.0.1:3000"
     weight = 2
 
 [params]
