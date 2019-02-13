@@ -1,7 +1,7 @@
 baseurl = "http://127.0.0.1:3000/mattle24_blog/public/"
 relativeURLs = false
 languageCode = "en-us"
-title = "Matt Lehman"
+title = "Blog"
 theme = "hugo-lithium"
 googleAnalytics = ""
 disqusShortname = ""
@@ -32,10 +32,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     MathJaxVersion = "2.7.5"
 
     # path to the favicon, under "static"
-    favicon = "https://avatars1.githubusercontent.com/u/10014947?s=460&v=4"
+    favicon = "../public/images/favicon.png"
 
     [params.logo]
-    url = "logo.png"
+    url = "favicon.png"
     width = 50
     height = 50
     alt = "Logo"

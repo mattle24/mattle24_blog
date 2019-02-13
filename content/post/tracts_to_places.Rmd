@@ -1,5 +1,5 @@
 ---
-title: "Matching Tracts to Cities"
+title: "Matching Tracts to Cities using R"
 author: "Matt Lehman"
 date: 2019-02-12
 categories: ["R"]
@@ -132,7 +132,7 @@ ggplot(indianapolis) +
 
 ## Calculating the dissimilarity index 
 
-Using the percents as weights, I can now calculate the dissimilarity index. 
+Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index. 
 
 ```{r, results=TRUE}
 # Calculate the disimilarity index (di) given a set of sub-geometries that match a macro-level geometry. 

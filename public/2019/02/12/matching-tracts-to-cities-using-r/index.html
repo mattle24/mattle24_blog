@@ -1,11 +1,76 @@
----
-title: "Matching Tracts to Cities using R"
-author: "Matt Lehman"
-date: 2019-02-12
-categories: ["R"]
-tags: ["sf", "spatial data", "us census", "tracts", "dissimilarity index", "r", "rstats", "data science"]
----
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.54.0" />
 
+
+<title>Matching Tracts to Cities using R - Blog</title>
+<meta property="og:title" content="Matching Tracts to Cities using R - Blog">
+
+
+  <link href='http://127.0.0.1:3000/mattle24_blog/public/images/favicon.png' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/mattle24_blog/public/css/fonts.css" media="all">
+<link rel="stylesheet" href="/mattle24_blog/public/css/main.css" media="all">
+
+<link rel = "stylesheet" type = "text//css" href = "/style.css">
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/mattle24_blog/public/" class="nav-logo">
+    <img src="/mattle24_blog/public/images/favicon.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/mattle24_blog/public/">All Posts</a></li>
+    
+    <li><a href="http://127.0.0.1:3000">Home</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">Matching Tracts to Cities using R</h1>
+
+    
+    <span class="article-date">2019-02-12</span>
+    
+
+    <div class="article-content">
+      
 
 
 <p>This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the <a href="https://www.census.gov/hhes/www/housing/resseg/pdf/app_b.pdf">dissimilarity index</a>, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.</p>
@@ -127,3 +192,47 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
 <li id="fn1"><p>Massey, Douglas, and Nancy Denton. 1998. American Apartheid: Segregation and the Making of the Underclass. Cambridge, MA: Harvard University Press. <a href="https://scholar.google.com/scholar_lookup?hl=en&amp;publication_year=1998&amp;author=Douglas+Massey&amp;author=Nancy+Denton&amp;title=American+Apartheid%3A+Segregation+and+the+Making+of+the+Underclass">Google Scholar</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/mattle24_blog/public/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/mattle24_blog/public/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/mattle24_blog/public/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
