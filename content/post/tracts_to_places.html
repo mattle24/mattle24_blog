@@ -47,7 +47,7 @@ ggplot(indianapolis) +
   coord_sf(datum = NA) +
   theme(plot.title = element_text(hjust = 0.5)) +
   labs(title = &quot;Indianapolis&quot;)</code></pre>
-<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/public/post/tracts_to_places_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Now, let’s match the tracts. First, I tried <code>st_covers()</code> (a helpful <a href="https://github.com/rstudio/cheatsheets/blob/master/sf.pdf"><code>sf</code> cheatsheet is available</a> for these functions).</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if Indianapolis covers it
 covers_matrix &lt;- st_covers(indianapolis, ind_tracts, sparse = FALSE)
@@ -58,7 +58,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(covers_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/public/post/tracts_to_places_files/figure-html/st_covers-1.png" width="672" /></p>
 <p><code>st_covers()</code> did an okay job, but I was missing all of the tracts with any area outside of Indianapolis. Next, I tried <code>st_intersects()</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 intersects_matrix &lt;- st_intersects(indianapolis, ind_tracts, sparse = FALSE)
@@ -69,7 +69,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/public/post/tracts_to_places_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p><code>st_intersects()</code> was better, but still problematic. It picked up all of the tracts inside of Indianapolis, but also all of the tracts bordering Indianapolis. To rememedy this, I used <code>st_intersection()</code>. To simplify, I’m going to use the subset of the tracts defined by <code>st_intersects()</code> instead of the full <code>ind_tracts</code>.</p>
 <pre class="r"><code># get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis
 ind_tracts_intersection &lt;- st_intersection(indianapolis, ind_tracts[t(intersects_matrix), ])</code></pre>
@@ -80,7 +80,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts_intersection, color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA)</code></pre>
-<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/public/post/tracts_to_places_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Unlike the previous two functions, <code>st_intersection()</code> returns an <code>sf</code> object. The function seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new <code>sf</code> object contains all of the tracts as the <code>sf</code> object indexed by <code>intersects_matrix</code>, including the ones that lo longer have any significant area.</p>
 <pre class="r"><code>nrow(ind_tracts_intersection) == nrow(ind_tracts[t(intersects_matrix), ])</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -92,7 +92,7 @@ ggplot(indianapolis) +
   geom_sf(color = &quot;darkblue&quot;, fill = &quot;skyblue&quot;) +
   geom_sf(data = ind_tracts[t(intersects_matrix), ][x, ], color = &quot;yellow&quot;, fill = &quot;yellow&quot;, alpha = 0.2) +
   coord_sf(datum = NA) </code></pre>
-<p><img src="/mattle24_blog/publicpost/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/mattle24_blog/public/post/tracts_to_places_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="calculating-the-dissimilarity-index" class="section level2">
 <h2>Calculating the dissimilarity index</h2>
