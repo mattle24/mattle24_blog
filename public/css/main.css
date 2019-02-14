@@ -18,7 +18,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #222;
+  color: #01134d;
 }
 
 a {
@@ -62,7 +62,6 @@ code {
   display: block;
   max-height: 40px;
   width: auto;
-  border-radius: 50%;
 }
 
 .nav-links {
@@ -83,11 +82,7 @@ code {
 
 .nav-links a {
   text-decoration: none;
-  color: #111;
-}
-
-.nav-links a:hover {
-  color: #000;
+  color: #01134d;
 }
 
 .content {
