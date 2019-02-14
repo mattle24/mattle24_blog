@@ -96,7 +96,7 @@ ggplot(indianapolis) +
 </div>
 <div id="calculating-the-dissimilarity-index" class="section level2">
 <h2>Calculating the dissimilarity index</h2>
-<p>Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index.</p>
+<p>Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index. For Indianapolis, it does not matter if I filtered out &lt; 1% or just used percents as weights.</p>
 <pre class="r"><code># Calculate the disimilarity index (di) given a set of sub-geometries that match a macro-level geometry. 
 # Eg. all the tracts in a place.
 dissimilarity_index &lt;- function(sub_geometry, majority_pop = white_pop, minority_pop = black_pop) {
@@ -120,6 +120,9 @@ dissimilarity_index &lt;- function(sub_geometry, majority_pop = white_pop, minor
 ind_tracts_intersection$wt &lt;- pcts
 dissimilarity_index(ind_tracts_intersection)</code></pre>
 <pre><code>## [1] 0.4111926</code></pre>
+<pre class="r"><code>ind_tracts_intersection$wt[ind_tracts_intersection$wt &lt; 0.01] &lt;- 0
+dissimilarity_index(ind_tracts_intersection)</code></pre>
+<pre><code>## [1] 0.4111731</code></pre>
 </div>
 <div class="footnotes">
 <hr />
