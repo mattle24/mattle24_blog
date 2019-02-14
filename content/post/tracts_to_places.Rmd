@@ -132,7 +132,7 @@ ggplot(indianapolis) +
 
 ## Calculating the dissimilarity index 
 
-Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index. For Indianapolis, it does not matter if I filtered out < 1% or just used percents as weights.
+Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index. For Indianapolis, it does not matter if I filtered out < 1% or just used percents as weights. This analysis does have the assumption that tract population is evenly spread out among the tract, but do not think the assumption has much of an impact on the index since the weights of areas I did not want to include are so low.
 
 ```{r, results=TRUE}
 # Calculate the disimilarity index (di) given a set of sub-geometries that match a macro-level geometry. 
@@ -145,12 +145,12 @@ dissimilarity_index <- function(sub_geometry, majority_pop = white_pop, minority
   sub_geometry %>%
     mutate(
       t =  !!majority_pop + !!minority_pop # pop in subgeometry
-      ,T. = sum(t) # total pop in macro geometry
       ,p = !!minority_pop / t # prop minority in tract
-      ,P. = sum(!!minority_pop) / T. # prop minority in macro geometry
     ) %>% 
     summarise(
-      dissimilarity_index = sum(wt * t * abs(p - P.)) / mean(2 * T. * P. * (1 - P.))
+      T. = sum(wt * t) # total pop in macro geometry
+      ,P. = sum(wt * !!minority_pop) / T. # prop minority in macro geometry
+      ,dissimilarity_index = sum(wt * t * abs(p - P.)) / (2 * T. * P. * (1 - P.))
       ) %>% 
     .$dissimilarity_index
 }
