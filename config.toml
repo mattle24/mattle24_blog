@@ -2,7 +2,7 @@ baseurl = "https://mattle24.github.io/mattle24_blog/public/"
 relativeURLs = false
 languageCode = "en-us"
 title = "Blog"
-theme = "hugo-lithium"
+theme = "hugo-PaperMod"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
@@ -31,7 +31,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
     MathJaxVersion = "2.7.5"
 
-    # path to the favicon, under "static"
+    # path to the favicon
     favicon = "../public/images/favicon.png"
 
     [params.logo]
@@ -39,3 +39,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     width = 50
     height = 50
     alt = "Logo"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

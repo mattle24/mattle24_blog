@@ -1,76 +1,195 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.54.0" />
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Matching Tracts to Cities using R | Blog</title>
+<meta name="keywords" content="sf, spatial data, us census, tracts, dissimilarity index, r, rstats, data science" />
+<meta name="description" content="This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the dissimilarity index, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.">
+<meta name="author" content="Matt Lehman">
+<link rel="canonical" href="https://mattle24.github.io/mattle24_blog/public/2019/02/12/matching-tracts-to-cities-using-r/" />
+<link crossorigin="anonymous" href="/mattle24_blog/public/assets/css/stylesheet.min.b9ff4cc257e914dab489bd18086151800e18f91456a5174bf28489210227a659.css" integrity="sha256-uf9MwlfpFNq0ib0YCGFRgA4Y&#43;RRWpRdL8oSJIQInplk=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/mattle24_blog/public/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://mattle24.github.io/mattle24_blog/public/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://mattle24.github.io/mattle24_blog/public/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://mattle24.github.io/mattle24_blog/public/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://mattle24.github.io/mattle24_blog/public/apple-touch-icon.png">
+<link rel="mask-icon" href="https://mattle24.github.io/mattle24_blog/public/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.87.0" />
+<meta property="og:title" content="Matching Tracts to Cities using R" />
+<meta property="og:description" content="This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the dissimilarity index, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mattle24.github.io/mattle24_blog/public/2019/02/12/matching-tracts-to-cities-using-r/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-02-12T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2019-02-12T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Matching Tracts to Cities using R"/>
+<meta name="twitter:description" content="This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the dissimilarity index, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated."/>
 
 
-<title>Matching Tracts to Cities using R - Blog</title>
-<meta property="og:title" content="Matching Tracts to Cities using R - Blog">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://mattle24.github.io/mattle24_blog/public/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Matching Tracts to Cities using R",
+      "item": "https://mattle24.github.io/mattle24_blog/public/2019/02/12/matching-tracts-to-cities-using-r/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Matching Tracts to Cities using R",
+  "name": "Matching Tracts to Cities using R",
+  "description": "This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the dissimilarity index, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.",
+  "keywords": [
+    "sf", "spatial data", "us census", "tracts", "dissimilarity index", "r", "rstats", "data science"
+  ],
+  "articleBody": " This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the dissimilarity index, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.\nHowever, the dissimilarity index requires matching sub-geomtries (neighborhoods) to macro geometries (places). I could not find any crosswalk table to link Census tracts, accepted as proxies for neighborhoods 1, to places in 1970. For a while, I wrote off the task as impratically difficult.\nAs is often the case, all it took was learning about the right package. The sf package provided me with all of the tools I needed to match tracts to places. In my research, I use data from IMPUS NHGIS, which has been an invaluable resource. However, to keep this example easily accessible, I will instead use tract data from the American Community Survey via tidycensus and place boundaries from tigris. Using tidycensus does require requesting a free API key from the US Census, which you can do here.\nPackages and setup library(sf) library(ggplot2) library(dplyr) library(tidycensus) library(tigris) library(tidyr) Sys.getenv(\"CENSUS_API_KEY\") # load API key from .Renviron options(tigris_class = \"sf\") ggplot2::theme_set(theme_bw() + theme(rect = element_blank()))  Obtain and munge data # get tract level ACS data with white and African American population ind_tracts  The tracts are in tidy format, with one row for variable B02001_002E (population white) and another row for B02001_003E (population black/ African American) but I wanted both variables in one row per tract.\nind_tracts % select(-moe) %% spread(key = variable, value = estimate) %% rename(white_pop = B02001_002, black_pop = B02001_003)  Geo-analysis To simplify the example, I isolated one city to see how tracts and places match. Since my research is focused on Indianapolis, I used that as the example. To start, I mapped Indianapolis by itself to get a sense of what to expect.\nindianapolis % filter(NAME == \"Indianapolis city (balance)\") ggplot(indianapolis) + geom_sf(color = \"darkblue\", fill = \"skyblue\") + coord_sf(datum = NA) + theme(plot.title = element_text(hjust = 0.5)) + labs(title = \"Indianapolis\") Now, let’s match the tracts. First, I tried st_covers() (a helpful sf cheatsheet is available for these functions).\n# get a matrix of one row with a logical column for each tract, TRUE if Indianapolis covers it covers_matrix  st_covers() did an okay job, but I was missing all of the tracts with any area outside of Indianapolis. Next, I tried st_intersects().\n# get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis intersects_matrix  st_intersects() was better, but still problematic. It picked up all of the tracts inside of Indianapolis, but also all of the tracts bordering Indianapolis. To rememedy this, I used st_intersection(). To simplify, I’m going to use the subset of the tracts defined by st_intersects() instead of the full ind_tracts.\n# get a matrix of one row with a logical column for each tract, TRUE if it intersects Indianapolis ind_tracts_intersection  ## Warning: attribute variables are assumed to be spatially constant ## throughout all geometries # map out the tracts with Indianapolis ggplot(indianapolis) + geom_sf(color = \"darkblue\", fill = \"skyblue\") + geom_sf(data = ind_tracts_intersection, color = \"yellow\", fill = \"yellow\", alpha = 0.2) + coord_sf(datum = NA) Unlike the previous two functions, st_intersection() returns an sf object. The function seems to essentially trim the tracts to make sure they are within Indianapolis. However, the new sf object contains all of the tracts as the sf object indexed by intersects_matrix, including the ones that lo longer have any significant area.\nnrow(ind_tracts_intersection) == nrow(ind_tracts[t(intersects_matrix), ]) ## [1] TRUE My hacky solution was to look at the areas. In the trimmed sf object, the borderline tracts have area approximately 0% of their original area. I confirmed this by plotting the trimmed tracts with less than 1% of their original area.\npcts   Calculating the dissimilarity index Using the percents as weights (or filtering out tracts with very small percentages), I could calculate the dissimilarity index. For Indianapolis, it does not matter if I filtered out # Calculate the disimilarity index (di) given a set of sub-geometries that match a macro-level geometry. # Eg. all the tracts in a place. dissimilarity_index % mutate( t = !!majority_pop + !!minority_pop # pop in subgeometry ,p = !!minority_pop / t # prop minority in tract ) %% summarise( T. = sum(wt * t) # total pop in macro geometry ,P. = sum(wt * !!minority_pop) / T. # prop minority in macro geometry ,dissimilarity_index = sum(wt * t * abs(p - P.)) / (2 * T. * P. * (1 - P.)) ) %% .$dissimilarity_index } ind_tracts_intersection$wt  ## [1] 0.5294555 ind_tracts_intersection$wt[ind_tracts_intersection$wt  ## [1] 0.5294455   Massey, Douglas, and Nancy Denton. 1998. American Apartheid: Segregation and the Making of the Underclass. Cambridge, MA: Harvard University Press. Google Scholar↩\n   ",
+  "wordCount" : "1061",
+  "inLanguage": "en",
+  "datePublished": "2019-02-12T00:00:00Z",
+  "dateModified": "2019-02-12T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Matt Lehman"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mattle24.github.io/mattle24_blog/public/2019/02/12/matching-tracts-to-cities-using-r/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mattle24.github.io/mattle24_blog/public/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
 
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
 
-  <link href='https://mattle24.github.io/mattle24_blog/public/images/favicon.png' rel='icon' type='image/x-icon'/>
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
 
+            .list {
+                background: var(--theme);
+            }
 
-  
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
+    </style>
+</noscript>
 
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://mattle24.github.io/mattle24_blog/public/" accesskey="h" title="Blog (Alt + H)">Blog</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://mattle24.github.io/mattle24_blog/public/" title="All Posts">
+                    <span>All Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://mattle24.github.io" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
 
-
-
-
-
-<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
-
-
-
-<link rel="stylesheet" href="/mattle24_blog/public/css/fonts.css" media="all">
-<link rel="stylesheet" href="/mattle24_blog/public/css/main.css" media="all">
-
-<link rel = "stylesheet" type = "text//css" href = "/style.css">
-
-  </head>
-  <body>
-    <div class="wrapper">
-      <header class="header">
-        <nav class="nav">
-  <a href="/mattle24_blog/public/" class="nav-logo">
-    <img src="/mattle24_blog/public/images/favicon.png"
-         width="50"
-         height="50"
-         alt="Logo">
-  </a>
-
-  <ul class="nav-links">
+<article class="post-single">
+  <header class="post-header">
     
-    <li><a href="/mattle24_blog/public/">All Posts</a></li>
-    
-    <li><a href="https://mattle24.github.io">Home</a></li>
-    
-  </ul>
-</nav>
-
-      </header>
-
-
-<main class="content" role="main">
-
-  <article class="article">
-    
-    <span class="article-duration">5 min read</span>
-    
-
-    <h1 class="article-title">Matching Tracts to Cities using R</h1>
-
-    
-    <span class="article-date">2019-02-12</span>
-    
-
-    <div class="article-content">
-      
+    <h1 class="post-title">
+      Matching Tracts to Cities using R
+    </h1>
+    <div class="post-meta">February 12, 2019&nbsp;·&nbsp;Matt Lehman
+</div>
+  </header> 
+  <div class="post-content">
 
 
 <p>This blog post is focused on how to match data from US Census tracts to US Census Places (cities) without a crosswalk table. Matching tract data to places may be useful for a variety of reasons. Recently, I wanted to measure segregation in US cities for a research project. The most commonly used metric is the <a href="https://www.census.gov/hhes/www/housing/resseg/pdf/app_b.pdf">dissimilarity index</a>, which measures how much of the minority population would have to move neighborhoods in order for the overall metropolitan area to be evenely integrated.</p>
@@ -196,46 +315,90 @@ dissimilarity_index(ind_tracts_intersection)</code></pre>
 </ol>
 </div>
 
-    </div>
-  </article>
 
-  
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/sf/">sf</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/spatial-data/">spatial data</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/us-census/">us census</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/tracts/">tracts</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/dissimilarity-index/">dissimilarity index</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/r/">r</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/rstats/">rstats</a></li>
+      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/data-science/">data science</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2021 <a href="https://mattle24.github.io/mattle24_blog/public/">Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
 
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
 
-</main>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
 
-      <footer class="footer">
-        <ul class="footer-links">
-          <li>
-            <a href="/mattle24_blog/public/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
-          </li>
-          <li>
-            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/mattle24_blog/public/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
-          </li>
-        </ul>
-      </footer>
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
 
-    </div>
-    
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
 
+</script>
+</body>
 
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
-
-    
-<script src="/mattle24_blog/public/js/math-code.js"></script>
-<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-
-    
-  </body>
 </html>
-
