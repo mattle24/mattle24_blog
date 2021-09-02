@@ -2,71 +2,71 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on mattle24</title>
-    <link>/tags/</link>
+    <link>https://mattle24.github.io/mattle24_blog/public/tags/</link>
     <description>Recent content in Tags on mattle24</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mattle24.github.io/mattle24_blog/public/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CRAN</title>
-      <link>/tags/cran/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/cran/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/cran/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/cran/</guid>
       <description></description>
     </item>
     
     <item>
       <title>deck</title>
-      <link>/tags/deck/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/deck/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/deck/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/deck/</guid>
       <description></description>
     </item>
     
     <item>
       <title>officer</title>
-      <link>/tags/officer/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/officer/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/officer/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/officer/</guid>
       <description></description>
     </item>
     
     <item>
       <title>powerpoint</title>
-      <link>/tags/powerpoint/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/powerpoint/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/powerpoint/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/powerpoint/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/tags/r/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/r/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>r2pptx</title>
-      <link>/tags/r2pptx/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/r2pptx/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r2pptx/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/r2pptx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>slides</title>
-      <link>/tags/slides/</link>
+      <link>https://mattle24.github.io/mattle24_blog/public/tags/slides/</link>
       <pubDate>Wed, 01 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/slides/</guid>
+      <guid>https://mattle24.github.io/mattle24_blog/public/tags/slides/</guid>
       <description></description>
     </item>
     

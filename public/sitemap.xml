@@ -2,46 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/categories/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/categories/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/cran/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/cran/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/deck/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/deck/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/officer/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/officer/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/post/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/powerpoint/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/powerpoint/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/r/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/r/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/r/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/categories/r/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/r2pptx/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/r2pptx/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/r2pptx/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/categories/r2pptx/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/releasing-r2pptx-on-cran/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/releasing-r2pptx-on-cran/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/slides/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/slides/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/</loc>
+    <loc>https://mattle24.github.io/mattle24_blog/public/tags/</loc>
     <lastmod>2021-09-01T00:00:00+00:00</lastmod>
   </url>
 </urlset>
