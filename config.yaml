@@ -1,4 +1,4 @@
-baseurl: /
+baseurl: https://mattle24.github.io/mattle24_blog/public/
 languageCode: en-us
 title: mattle24
 theme: "hugo-PaperMod"
