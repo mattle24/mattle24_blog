@@ -1,9 +1,9 @@
 ---
 title: "Releasing r2pptx on CRAN"
 author: "Matt Lehman"
-date: 2021-09-01
+date: 2021-09-03
 categories: ["R", "r2pptx"]
-tags: ["R", "r2pptx", "CRAN", "officer", "powerpoint", "slides", "deck"]
+tags: ["R", "r2pptx", "CRAN", "officer", "PowerPoint", "slides", "deck"]
 output:
   blogdown::html_page:
     toc: true
@@ -19,16 +19,14 @@ output:
 </ul>
 </div>
 
-<p>I’m excited to have the <a href="https://mattle24.github.io/r2pptx/"><code>r2pptx</code></a>
-package on CRAN! <code>r2pptx</code> is designed to provide a beginner-friendly interface
-to make Powerpoint presentations in R. It can be a helpful package to use
-if you often create slide decks that contain tables, plots, or calculations that
-come from R code.</p>
-<p><code>r2pptx</code> is built as a wrapper around
-<a href="https://davidgohel.github.io/officer/"><code>officer</code></a>, and wouldn’t be possible
-without all of <code>officer</code> developer David Gohel’s hard work. Thanks David!</p>
-<p>In this post I’ll go through how to make a basic presentation using <code>r2pptx</code>, as
-well as how to make a more advanced presentation.</p>
+<p>I’m excited to have the <a href="https://mattle24.github.io/r2pptx/"><code>r2pptx</code></a> package
+on CRAN! <code>r2pptx</code> is an easy way to use R to make Powerpoint presentations. It
+can be helpful if you often create slide decks that contain tables,
+plots, or calculations from R code.</p>
+<p><code>r2pptx</code> is a wrapper around
+<a href="https://davidgohel.github.io/officer/"><code>officer</code></a>. It wouldn’t be possible
+without <code>officer</code> developer David Gohel’s hard work. Thanks David!</p>
+<p>In this post I’ll go through how to make basic and advanced presentations using <code>r2pptx</code>.</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <p>First, you’ll need to install <code>r2pptx</code>. You can do so with</p>
@@ -44,19 +42,18 @@ library(r2pptx)</code></pre>
 </div>
 <div id="simple-example" class="section level2">
 <h2>Simple example</h2>
-<p><code>r2pptx</code> leverages the power of the <code>officer</code> package and the ease of use of powerpoint
-templates to form a simple and easy to use API to create powerpoint slide decks
-straight from R. Therefore, the first thing we need to do is to choose a powerpoint
-template. This is a normal <code>.pptx</code> file that has the template we want in <code>Slide Master</code>. By default, <code>r2pptx</code> uses the default template in <code>officer</code>, which seems
-like a slight variation on the default Microsoft powerpoint template.</p>
+<p>First we need to choose a PowerPoint template. This is a normal <code>.pptx</code> file
+that has the template we want in <code>Slide Master</code>. By default, <code>r2pptx</code> uses the
+default template in <code>officer</code>. This seems like a slight variation on the
+default Microsoft PowerPoint template.</p>
 <p>Let’s start by creating a <code>presentation</code>.</p>
 <pre class="r"><code>presentation &lt;- new_presentation()
 print(presentation)</code></pre>
 <pre><code>## Presentation with 0 slides.</code></pre>
 <pre class="r"><code>print(template_path(presentation))</code></pre>
-<pre><code>## [1] &quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/officer/template/template.pptx&quot;</code></pre>
+<pre><code>## [1] &quot;/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/officer/template/template.pptx&quot;</code></pre>
 <p>We can see this is an empty presentation with the template path set to the default
-<code>officer</code> template. What’s in this template? We can check easily using some utility functions.</p>
+<code>officer</code> template. What’s in this template? We can check using some utility functions.</p>
 <pre class="r"><code>get_layouts(presentation)</code></pre>
 <pre><code>##              layout       master
 ## 1       Title Slide Office Theme
@@ -66,8 +63,8 @@ print(presentation)</code></pre>
 ## 5        Comparison Office Theme
 ## 6        Title Only Office Theme
 ## 7             Blank Office Theme</code></pre>
-<p>This template has seven different layouts. That’s good to know, but it doesn’t help us
-entirely figure out which layout to use for which purpose. Let’s keep going!</p>
+<p>This template has seven different layouts. That’s good to know, but we still don’t
+know which layout to use for which purpose. Let’s keep going!</p>
 <pre class="r"><code>layouts &lt;- get_layouts(presentation)$layout
 for (layout in layouts) {
   plot_layout(presentation, layout)
@@ -75,7 +72,7 @@ for (layout in layouts) {
 }</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-2.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-3.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-4.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-5.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-6.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-7.png" width="672" /></p>
 <p>Now we can see for each slide layout what options we have to use as placeholders! Knowing this, we can move forward and start constructing our presentation!</p>
-<p>In <code>r2pptx</code> syntax, <code>presentations</code> are made up of <code>slides</code> which are made up of <code>elements</code>. <code>elements</code> represent anything we want to add to the deck – text, plots, images, tables, etc. Anything compatible with the <code>officer</code> package works here!</p>
+<p>In <code>r2pptx</code> syntax, <code>presentations</code> consist of <code>slides</code> which consist of <code>elements</code>. <code>elements</code> represent anything we want to add to the deck. This could be text, plots, images, tables, etc. Anything compatible with the <code>officer</code> package works here!</p>
 <p>We start out making a title slide with a title and subtitle. We give <code>elements</code> for
 the title and subtitle as arguments to the <code>new_slide()</code> function. And we give “Title Slide”
 as the layout name, per the information from above.</p>
@@ -91,8 +88,7 @@ print(title_slide)</code></pre>
 ## -  character
 ## -  character</code></pre>
 <p><code>elements</code> have two arguments. The <code>key</code> tells R where to place the element. Currently,
-this only supports a placeholder label. Placeholder labls are the name of placeholders,
-which are the objects in a powerpoint slide layout (as seen above). Future development may allow other location specifications, such as giving x and y positions.</p>
+this only supports a placeholder label. Placeholders are the objects in a PowerPoint slide layout (as seen above). Placeholder labels are the name of placeholders. Future development may allow other location specifications, such as giving x and y positions.</p>
 <p>Now we add the title slide to our presentation.</p>
 <pre class="r"><code>presentation &lt;- presentation + title_slide
 print(presentation)</code></pre>
@@ -125,7 +121,7 @@ print(plot_slide)</code></pre>
   plot_slide
 print(presentation)</code></pre>
 <pre><code>## Presentation with 2 slides.</code></pre>
-<p>And then we can write the <code>presentation</code> to powerpoint.</p>
+<p>And then we can write the <code>presentation</code> to PowerPoint.</p>
 <pre class="r"><code>ppt_path &lt;- tempfile(fileext = &quot;.pptx&quot;)
 write_pptx(presentation, ppt_path)
 if (interactive()) system(paste(&quot;open&quot;, ppt_path))</code></pre>
@@ -135,7 +131,7 @@ if (interactive()) system(paste(&quot;open&quot;, ppt_path))</code></pre>
 </div>
 <div id="advanced-example" class="section level2">
 <h2>Advanced example</h2>
-<p>In a more advanced example, we may want to produce a number of similar slides.
+<p>In a more advanced example, we may want to produce many similar slides.
 For example, we’ll use a dataset which has metrics on US Senators. In this example,
 we’d like to make a presentation that has one slide per state. Each state’s slide
 will have the same layout, but data specific to the given state.</p>
@@ -187,8 +183,8 @@ color_scale_fn &lt;- function(x) {
 one slide. The slide will have a plot showing how the state’s Senators’ DW
 Nominate scores have changed over time and a table showing the scores for recent
 Senators.</p>
-<pre class="r"><code># make a slidelist - a new class of object that is just meant to be a helpful
-# way to hold slides that aren&#39;t part of a presentation yet
+<pre class="r"><code># make a slidelist - a new class of object that is a helpful way to hold slides
+# that aren&#39;t part of a presentation yet
 slide_list &lt;- new_slidelist()
 
 for (state in states) {
@@ -241,7 +237,7 @@ for (state in states) {
 # and now make a presentation and add the slidelist (containing all the slides)
 # to the presentation
 presentation &lt;- new_presentation() + slide_list</code></pre>
-<p>Last, we write the presentation as a powerpoint file and open it!</p>
+<p>Last, we write the presentation as a PowerPoint file and open it!</p>
 <pre class="r"><code>ppt_path &lt;- tempfile(fileext = &quot;.pptx&quot;)
 write_pptx(presentation, ppt_path)
 if (interactive()) system(paste(&quot;open&quot;, ppt_path))</code></pre>
