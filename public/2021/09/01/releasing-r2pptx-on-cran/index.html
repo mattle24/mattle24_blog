@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Releasing r2pptx on CRAN | mattle24</title>
+<meta name="keywords" content="R, r2pptx, CRAN, officer, powerpoint, slides, deck" />
+<meta name="description" content="Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is designed to provide a beginner-friendly interface to make Powerpoint presentations in R. It can be a helpful package to use if you often create slide decks that contain tables, plots, or calculations that come from R code.
+r2pptx is built as a wrapper around officer, and wouldn’t be possible without all of officer developer David Gohel’s hard work.">
+<meta name="author" content="Matt Lehman">
+<link rel="canonical" href="/2021/09/01/releasing-r2pptx-on-cran/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.b9ff4cc257e914dab489bd18086151800e18f91456a5174bf28489210227a659.css" integrity="sha256-uf9MwlfpFNq0ib0YCGFRgA4Y&#43;RRWpRdL8oSJIQInplk=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.87.0" />
+<meta property="og:title" content="Releasing r2pptx on CRAN" />
+<meta property="og:description" content="Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is designed to provide a beginner-friendly interface to make Powerpoint presentations in R. It can be a helpful package to use if you often create slide decks that contain tables, plots, or calculations that come from R code.
+r2pptx is built as a wrapper around officer, and wouldn’t be possible without all of officer developer David Gohel’s hard work." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2021/09/01/releasing-r2pptx-on-cran/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-09-01T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-09-01T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Releasing r2pptx on CRAN"/>
+<meta name="twitter:description" content="Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is designed to provide a beginner-friendly interface to make Powerpoint presentations in R. It can be a helpful package to use if you often create slide decks that contain tables, plots, or calculations that come from R code.
+r2pptx is built as a wrapper around officer, and wouldn’t be possible without all of officer developer David Gohel’s hard work."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/post/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Releasing r2pptx on CRAN",
+      "item": "/2021/09/01/releasing-r2pptx-on-cran/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Releasing r2pptx on CRAN",
+  "name": "Releasing r2pptx on CRAN",
+  "description": "Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is designed to provide a beginner-friendly interface to make Powerpoint presentations in R. It can be a helpful package to use if you often create slide decks that contain tables, plots, or calculations that come from R code.\nr2pptx is built as a wrapper around officer, and wouldn’t be possible without all of officer developer David Gohel’s hard work.",
+  "keywords": [
+    "R", "r2pptx", "CRAN", "officer", "powerpoint", "slides", "deck"
+  ],
+  "articleBody": "   Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is designed to provide a beginner-friendly interface to make Powerpoint presentations in R. It can be a helpful package to use if you often create slide decks that contain tables, plots, or calculations that come from R code.\nr2pptx is built as a wrapper around officer, and wouldn’t be possible without all of officer developer David Gohel’s hard work. Thanks David!\nIn this post I’ll go through how to make a basic presentation using r2pptx, as well as how to make a more advanced presentation.\nInstallation First, you’ll need to install r2pptx. You can do so with\ninstall.packages(\"r2pptx\") # or you can install the development version from github # remotes::install_github(\"mattle24utils/r2pptx\") We’ll also load the ggplot2, dplyr, and flextable packages for this example. You don’t need any of these to use r2pptx, but you may find them useful.\n# install.packages(c(\"dplyr\", \"ggplot2\", \"flextable\")) library(ggplot2) library(dplyr) library(flextable) library(r2pptx)  Simple example r2pptx leverages the power of the officer package and the ease of use of powerpoint templates to form a simple and easy to use API to create powerpoint slide decks straight from R. Therefore, the first thing we need to do is to choose a powerpoint template. This is a normal .pptx file that has the template we want in Slide Master. By default, r2pptx uses the default template in officer, which seems like a slight variation on the default Microsoft powerpoint template.\nLet’s start by creating a presentation.\npresentation  ## Presentation with 0 slides. print(template_path(presentation)) ## [1] \"/Library/Frameworks/R.framework/Versions/4.1/Resources/library/officer/template/template.pptx\" We can see this is an empty presentation with the template path set to the default officer template. What’s in this template? We can check easily using some utility functions.\nget_layouts(presentation) ## layout master ## 1 Title Slide Office Theme ## 2 Title and Content Office Theme ## 3 Section Header Office Theme ## 4 Two Content Office Theme ## 5 Comparison Office Theme ## 6 Title Only Office Theme ## 7 Blank Office Theme This template has seven different layouts. That’s good to know, but it doesn’t help us entirely figure out which layout to use for which purpose. Let’s keep going!\nlayouts  Now we can see for each slide layout what options we have to use as placeholders! Knowing this, we can move forward and start constructing our presentation!\nIn r2pptx syntax, presentations are made up of slides which are made up of elements. elements represent anything we want to add to the deck – text, plots, images, tables, etc. Anything compatible with the officer package works here!\nWe start out making a title slide with a title and subtitle. We give elements for the title and subtitle as arguments to the new_slide() function. And we give “Title Slide” as the layout name, per the information from above.\ntitle_slide  ## Slide with layout `Title Slide` and 2 elements: ## - character ## - character elements have two arguments. The key tells R where to place the element. Currently, this only supports a placeholder label. Placeholder labls are the name of placeholders, which are the objects in a powerpoint slide layout (as seen above). Future development may allow other location specifications, such as giving x and y positions.\nNow we add the title slide to our presentation.\npresentation  ## Presentation with 1 slides. Easy!\nLet’s add another slide with a ggplot. This time, we’ll add the elements to the slide rather than initializing the slide with elements.\n# create the slide object plot_slide  ## Slide with layout `Title and Content` and 0 elements: ## - # create an element for the title element title_element  ## Slide with layout `Title and Content` and 2 elements: ## - character ## - gg presentation  ## Presentation with 2 slides. And then we can write the presentation to powerpoint.\nppt_path  And you have a slide deck! Congrats! The deck should look like:\n Advanced example In a more advanced example, we may want to produce a number of similar slides. For example, we’ll use a dataset which has metrics on US Senators. In this example, we’d like to make a presentation that has one slide per state. Each state’s slide will have the same layout, but data specific to the given state.\nG. Elliott Morris has an R package called politicaldata which we will use to get DW Nominate scores for US Senators. DW Nominate is an academic project that calculates a score for each senator ranging from -1 to 1. A score of -1 indicates the senator is very far to the left, and a score of 1 indicates the senator is very far to the right. A score of 0 indicates the senator is in the middle of the left / right spectrum. There is more nuance, but we will ignore that in this example.\nLet’s install the politicaldata package, which contains the data we’ll use.\nremotes::install_github(\"elliottmorris/politicaldata\") And now we load the data into our R session.\nsenate_dw_df  We get a list of states to iterate over.\nstates % dplyr::inner_join(data.frame(state_abbrev = x), by = \"state_abbrev\") %% dplyr::pull(state_name) } I’m making some helper functions to deal with color scales – this is not important to understand.\n.transform_0_1 red color scale. values between -1 and 0 will be on a blue - # white color scale color_scale_fn  Now we can loop through each state to make 50 slides. For each state, we’ll make one slide. The slide will have a plot showing how the state’s Senators’ DW Nominate scores have changed over time and a table showing the scores for recent Senators.\n# make a slidelist - a new class of object that is just meant to be a helpful # way to hold slides that aren't part of a presentation yet slide_list % dplyr::filter(state_abbrev == !!state) # make the table dw_recent_table % dplyr::filter(state_abbrev == !!state) %% dplyr::arrange(-year) %% dplyr::slice(1:10) %% dplyr::select(year, bioname, nominate_dim1) %% flextable() %% set_formatter(year = as.character) %% bg(j = 3, bg = color_scale_fn) %% set_header_labels( year = \"Year\", bioname = \"Name\", nominate_dim1 = \"DW Nominate (1)\" ) %% # placeholder 2 width is 4.416667 width(j = 2, width = 2.5) %% width(j = 3, width = 1) %% width(j = 1, width = 4.416667 - 1 - 2.5) # make the time series plot dw_time_series_plot  Last, we write the presentation as a powerpoint file and open it!\nppt_path  The first few slides should look like:\nSlide with a plot and table for Arkansas\n I hope this has shown the power and flexability of r2pptx! You can find more documentation at the package’s website, linked here.\n ",
+  "wordCount" : "1484",
+  "inLanguage": "en",
+  "datePublished": "2021-09-01T00:00:00Z",
+  "dateModified": "2021-09-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Matt Lehman"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2021/09/01/releasing-r2pptx-on-cran/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "mattle24",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="mattle24 (Alt + H)">mattle24</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/rstudio/blogdown" title="GitHub">
+                    <span>GitHub</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com/rstudio" title="Twitter">
+                    <span>Twitter</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Releasing r2pptx on CRAN
+    </h1>
+    <div class="post-meta">September 1, 2021&nbsp;·&nbsp;Matt Lehman
+</div>
+  </header> 
+  <div class="post-content">
+<script src="/2021/09/01/releasing-r2pptx-on-cran/index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#simple-example">Simple example</a></li>
+<li><a href="#advanced-example">Advanced example</a></li>
+</ul>
+</div>
+
+<p>I’m excited to have the <a href="https://mattle24.github.io/r2pptx/"><code>r2pptx</code></a>
+package on CRAN! <code>r2pptx</code> is designed to provide a beginner-friendly interface
+to make Powerpoint presentations in R. It can be a helpful package to use
+if you often create slide decks that contain tables, plots, or calculations that
+come from R code.</p>
+<p><code>r2pptx</code> is built as a wrapper around
+<a href="https://davidgohel.github.io/officer/"><code>officer</code></a>, and wouldn’t be possible
+without all of <code>officer</code> developer David Gohel’s hard work. Thanks David!</p>
+<p>In this post I’ll go through how to make a basic presentation using <code>r2pptx</code>, as
+well as how to make a more advanced presentation.</p>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>First, you’ll need to install <code>r2pptx</code>. You can do so with</p>
+<pre class="r"><code>install.packages(&quot;r2pptx&quot;)
+# or you can install the development version from github
+# remotes::install_github(&quot;mattle24utils/r2pptx&quot;)</code></pre>
+<p>We’ll also load the <code>ggplot2</code>, <code>dplyr</code>, and <code>flextable</code> packages for this example. You don’t need any of these to use <code>r2pptx</code>, but you may find them useful.</p>
+<pre class="r"><code># install.packages(c(&quot;dplyr&quot;, &quot;ggplot2&quot;, &quot;flextable&quot;))
+library(ggplot2)
+library(dplyr)
+library(flextable)
+library(r2pptx)</code></pre>
+</div>
+<div id="simple-example" class="section level2">
+<h2>Simple example</h2>
+<p><code>r2pptx</code> leverages the power of the <code>officer</code> package and the ease of use of powerpoint
+templates to form a simple and easy to use API to create powerpoint slide decks
+straight from R. Therefore, the first thing we need to do is to choose a powerpoint
+template. This is a normal <code>.pptx</code> file that has the template we want in <code>Slide Master</code>. By default, <code>r2pptx</code> uses the default template in <code>officer</code>, which seems
+like a slight variation on the default Microsoft powerpoint template.</p>
+<p>Let’s start by creating a <code>presentation</code>.</p>
+<pre class="r"><code>presentation &lt;- new_presentation()
+print(presentation)</code></pre>
+<pre><code>## Presentation with 0 slides.</code></pre>
+<pre class="r"><code>print(template_path(presentation))</code></pre>
+<pre><code>## [1] &quot;/Library/Frameworks/R.framework/Versions/4.1/Resources/library/officer/template/template.pptx&quot;</code></pre>
+<p>We can see this is an empty presentation with the template path set to the default
+<code>officer</code> template. What’s in this template? We can check easily using some utility functions.</p>
+<pre class="r"><code>get_layouts(presentation)</code></pre>
+<pre><code>##              layout       master
+## 1       Title Slide Office Theme
+## 2 Title and Content Office Theme
+## 3    Section Header Office Theme
+## 4       Two Content Office Theme
+## 5        Comparison Office Theme
+## 6        Title Only Office Theme
+## 7             Blank Office Theme</code></pre>
+<p>This template has seven different layouts. That’s good to know, but it doesn’t help us
+entirely figure out which layout to use for which purpose. Let’s keep going!</p>
+<pre class="r"><code>layouts &lt;- get_layouts(presentation)$layout
+for (layout in layouts) {
+  plot_layout(presentation, layout)
+  title(main = layout)
+}</code></pre>
+<p><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-2.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-3.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-4.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-5.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-6.png" width="672" /><img src="/2021/09/01/releasing-r2pptx-on-cran/index_files/figure-html/unnamed-chunk-4-7.png" width="672" /></p>
+<p>Now we can see for each slide layout what options we have to use as placeholders! Knowing this, we can move forward and start constructing our presentation!</p>
+<p>In <code>r2pptx</code> syntax, <code>presentations</code> are made up of <code>slides</code> which are made up of <code>elements</code>. <code>elements</code> represent anything we want to add to the deck – text, plots, images, tables, etc. Anything compatible with the <code>officer</code> package works here!</p>
+<p>We start out making a title slide with a title and subtitle. We give <code>elements</code> for
+the title and subtitle as arguments to the <code>new_slide()</code> function. And we give “Title Slide”
+as the layout name, per the information from above.</p>
+<pre class="r"><code>title_slide &lt;- new_slide(
+  layout = &quot;Title Slide&quot;,
+  elements = list(
+    new_element(key = &quot;Title 1&quot;, value = &quot;The title&quot;),
+    new_element(key = &quot;Subtitle 2&quot;, value = &quot;The subtitle&quot;)  
+  )
+)
+print(title_slide)</code></pre>
+<pre><code>## Slide with layout `Title Slide` and 2 elements:
+## -  character
+## -  character</code></pre>
+<p><code>elements</code> have two arguments. The <code>key</code> tells R where to place the element. Currently,
+this only supports a placeholder label. Placeholder labls are the name of placeholders,
+which are the objects in a powerpoint slide layout (as seen above). Future development may allow other location specifications, such as giving x and y positions.</p>
+<p>Now we add the title slide to our presentation.</p>
+<pre class="r"><code>presentation &lt;- presentation + title_slide
+print(presentation)</code></pre>
+<pre><code>## Presentation with 1 slides.</code></pre>
+<p>Easy!</p>
+<p>Let’s add another slide with a ggplot. This time, we’ll add the <code>elements</code> to the <code>slide</code>
+rather than initializing the <code>slide</code> with <code>elements</code>.</p>
+<pre class="r"><code># create the slide object
+plot_slide &lt;- new_slide(layout = &quot;Title and Content&quot;)
+print(plot_slide)</code></pre>
+<pre><code>## Slide with layout `Title and Content` and 0 elements:
+## -</code></pre>
+<pre class="r"><code># create an element for the title element
+title_element &lt;- new_element(key = &quot;Title 1&quot;, value = &quot;A plot&quot;)
+
+# create a ggplot
+cars_plot &lt;- ggplot(mtcars, aes(x = mpg, y = cyl)) + 
+  geom_point()
+# create an element for the plot
+plot_element &lt;- new_element(key = &quot;Content Placeholder 2&quot;, value = cars_plot)
+
+plot_slide &lt;- plot_slide +
+  title_element +
+  plot_element
+print(plot_slide)</code></pre>
+<pre><code>## Slide with layout `Title and Content` and 2 elements:
+## -  character
+## -  gg</code></pre>
+<pre class="r"><code>presentation &lt;- presentation +
+  plot_slide
+print(presentation)</code></pre>
+<pre><code>## Presentation with 2 slides.</code></pre>
+<p>And then we can write the <code>presentation</code> to powerpoint.</p>
+<pre class="r"><code>ppt_path &lt;- tempfile(fileext = &quot;.pptx&quot;)
+write_pptx(presentation, ppt_path)
+if (interactive()) system(paste(&quot;open&quot;, ppt_path))</code></pre>
+<p>And you have a slide deck! Congrats! The deck should look like:</p>
+<p><img src="src/simple_deck.001.jpeg" alt="Title slide" />
+<img src="src/simple_deck.002.jpeg" alt="Slide with plot" /></p>
+</div>
+<div id="advanced-example" class="section level2">
+<h2>Advanced example</h2>
+<p>In a more advanced example, we may want to produce a number of similar slides.
+For example, we’ll use a dataset which has metrics on US Senators. In this example,
+we’d like to make a presentation that has one slide per state. Each state’s slide
+will have the same layout, but data specific to the given state.</p>
+<p><a href="https://gelliottmorris.com/">G. Elliott Morris</a> has an R package called
+<code>politicaldata</code> which we will use to get DW Nominate scores for US Senators. <a href="https://voteview.com/about">DW
+Nominate</a> is an academic project that calculates a
+score for each senator ranging from -1 to 1. A score of -1 indicates the senator
+is very far to the left, and a score of 1 indicates the senator is very far to
+the right. A score of 0 indicates the senator is in the middle of the left /
+right spectrum. There is more nuance, but we will ignore that in this example.</p>
+<p>Let’s install the <code>politicaldata</code> package, which contains the data we’ll use.</p>
+<pre class="r"><code>remotes::install_github(&quot;elliottmorris/politicaldata&quot;)</code></pre>
+<p>And now we load the data into our R session.</p>
+<pre class="r"><code>senate_dw_df &lt;- politicaldata::get_senate_nominate()
+# first congress met in 1789, new congress every two years after that
+senate_dw_df$year &lt;- ((senate_dw_df$congress - 1) * 2) + 1789</code></pre>
+<p>We get a list of states to iterate over.</p>
+<pre class="r"><code>states &lt;- sort(unique(senate_dw_df$state_abbrev))
+
+# helpers to go from state abbreviation to state name
+state_bridge &lt;- data.frame(
+  state_abbrev = state.abb,
+  state_name = state.name
+)
+state_abbrev_to_name &lt;- function(x) {
+  state_bridge %&gt;% 
+    dplyr::inner_join(data.frame(state_abbrev = x), by = &quot;state_abbrev&quot;) %&gt;% 
+    dplyr::pull(state_name)
+}</code></pre>
+<p>I’m making some helper functions to deal with color scales – this is not important
+to understand.</p>
+<pre class="r"><code>.transform_0_1 &lt;- function(x, low_pt, high_pt) {
+   (x - low_pt) / (high_pt - low_pt)
+}
+
+# takes in a DW nomiate value and returns a color. values between 0 and 1 will
+# be on a white -&gt; red color scale. values between -1 and 0 will be on a blue -&gt;
+# white color scale
+color_scale_fn &lt;- function(x) {
+  pos_vals &lt;- .transform_0_1(x, 0, 1)
+  neg_vals &lt;- .transform_0_1(x, -1, 0)
+  pos_colors &lt;- scales::seq_gradient_pal(low = &quot;white&quot;, high = &quot;red&quot;)(pos_vals)  
+  neg_colors &lt;- scales::seq_gradient_pal(low = &quot;blue&quot;, high = &quot;white&quot;)(neg_vals)
+  res &lt;- pos_colors
+  res[x &lt; 0] &lt;- neg_colors[x &lt; 0]
+  res
+}</code></pre>
+<p>Now we can loop through each state to make 50 slides. For each state, we’ll make
+one slide. The slide will have a plot showing how the state’s Senators’ DW
+Nominate scores have changed over time and a table showing the scores for recent
+Senators.</p>
+<pre class="r"><code># make a slidelist - a new class of object that is just meant to be a helpful
+# way to hold slides that aren&#39;t part of a presentation yet
+slide_list &lt;- new_slidelist()
+
+for (state in states) {
+  state_senate_dw_df &lt;- senate_dw_df %&gt;% 
+    dplyr::filter(state_abbrev == !!state)
+  
+  # make the table
+  dw_recent_table &lt;- state_senate_dw_df %&gt;% 
+    dplyr::filter(state_abbrev == !!state) %&gt;% 
+    dplyr::arrange(-year) %&gt;% 
+    dplyr::slice(1:10) %&gt;% 
+    dplyr::select(year, bioname, nominate_dim1) %&gt;% 
+    flextable() %&gt;% 
+    set_formatter(year = as.character) %&gt;% 
+    bg(j = 3, bg = color_scale_fn) %&gt;% 
+    set_header_labels(
+      year = &quot;Year&quot;,
+      bioname = &quot;Name&quot;,
+      nominate_dim1 = &quot;DW Nominate (1)&quot;
+    ) %&gt;% 
+    # placeholder 2 width is 4.416667
+    width(j = 2, width = 2.5) %&gt;% 
+    width(j = 3, width = 1) %&gt;% 
+    width(j = 1, width = 4.416667 - 1 - 2.5) 
+  
+  # make the time series plot
+  dw_time_series_plot &lt;-
+    ggplot(state_senate_dw_df, aes(x = year, y = nominate_dim1, fill = nominate_dim1)) +
+    geom_hline(yintercept = 0, linetype = &quot;dashed&quot;) +
+    geom_smooth(method = &quot;loess&quot;, formula = y ~ x, color = &quot;gray45&quot;) +
+    geom_point(pch = 21) +
+    scale_fill_gradient2(low = &quot;blue&quot;, high = &quot;red&quot;, guide = &quot;none&quot;) +
+    theme_minimal() +
+    labs(x = &quot;Year&quot;, y = &quot;DW Nominate (Dim1)&quot;)
+
+  # make the slide
+  state_slide &lt;- new_slide(
+    layout = &quot;Two Content&quot;,
+    elements = list(
+      new_element(&quot;Title 1&quot;, state_abbrev_to_name(state)),
+      new_element(&quot;Content Placeholder 2&quot;, dw_time_series_plot),
+      new_element(&quot;Content Placeholder 3&quot;, dw_recent_table)
+    )
+  )
+  
+  # add the slide to the slidelist
+  slide_list &lt;- slide_list + state_slide
+}
+
+# and now make a presentation and add the slidelist (containing all the slides)
+# to the presentation
+presentation &lt;- new_presentation() + slide_list</code></pre>
+<p>Last, we write the presentation as a powerpoint file and open it!</p>
+<pre class="r"><code>ppt_path &lt;- tempfile(fileext = &quot;.pptx&quot;)
+write_pptx(presentation, ppt_path)
+if (interactive()) system(paste(&quot;open&quot;, ppt_path))</code></pre>
+<p>The first few slides should look like:</p>
+<p><img src="src/advanced_deck.001.jpeg" alt="Slide with a plot and table for Alaska" />
+<img src="src/advanced_deck.002.jpeg" alt="Slide with a plot and table for Alabama" /></p>
+<div class="figure">
+<img src="src/advanced_deck.003.jpeg" alt="" />
+<p class="caption">Slide with a plot and table for Arkansas</p>
+</div>
+<p>I hope this has shown the power and flexability of <code>r2pptx</code>! You can find more
+documentation at the package’s website, <a href="https://mattle24.github.io/r2pptx/">linked here</a>.</p>
+</div>
+
+
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/r/">R</a></li>
+      <li><a href="/tags/r2pptx/">r2pptx</a></li>
+      <li><a href="/tags/cran/">CRAN</a></li>
+      <li><a href="/tags/officer/">officer</a></li>
+      <li><a href="/tags/powerpoint/">powerpoint</a></li>
+      <li><a href="/tags/slides/">slides</a></li>
+      <li><a href="/tags/deck/">deck</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2021 <a href="/">mattle24</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

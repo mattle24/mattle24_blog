@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on mattle24</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on mattle24</description>
+    <title>deck on mattle24</title>
+    <link>/tags/deck/</link>
+    <description>Recent content in deck on mattle24</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/deck/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Releasing r2pptx on CRAN</title>
       <link>/2021/09/01/releasing-r2pptx-on-cran/</link>
