@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>Releasing r2pptx on CRAN | mattle24</title>
-<meta name="keywords" content="R, r2pptx, CRAN, officer, PowerPoint, slides, deck" />
+<meta name="keywords" content="R, r2pptx" />
 <meta name="description" content="Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is an easy way to use R to make Powerpoint presentations. It can be helpful if you often create slide decks that contain tables, plots, or calculations from R code.
 r2pptx is a wrapper around officer. It wouldn’t be possible without officer developer David Gohel’s hard work. Thanks David!
 In this post I’ll go through how to make basic and advanced presentations using r2pptx.">
@@ -29,8 +29,8 @@ r2pptx is a wrapper around officer. It wouldn’t be possible without officer de
 In this post I’ll go through how to make basic and advanced presentations using r2pptx." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mattle24.github.io/mattle24_blog/public/releasing-r2pptx-on-cran/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-09-02T00:00:00&#43;00:00" />
-<meta property="article:modified_time" content="2021-09-02T00:00:00&#43;00:00" />
+<meta property="article:published_time" content="2021-09-15T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-09-15T00:00:00&#43;00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Releasing r2pptx on CRAN"/>
@@ -67,13 +67,13 @@ In this post I’ll go through how to make basic and advanced presentations usin
   "name": "Releasing r2pptx on CRAN",
   "description": "Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is an easy way to use R to make Powerpoint presentations. It can be helpful if you often create slide decks that contain tables, plots, or calculations from R code.\nr2pptx is a wrapper around officer. It wouldn’t be possible without officer developer David Gohel’s hard work. Thanks David!\nIn this post I’ll go through how to make basic and advanced presentations using r2pptx.",
   "keywords": [
-    "R", "r2pptx", "CRAN", "officer", "PowerPoint", "slides", "deck"
+    "R", "r2pptx"
   ],
   "articleBody": "   Installation Simple example Advanced example   I’m excited to have the r2pptx package on CRAN! r2pptx is an easy way to use R to make Powerpoint presentations. It can be helpful if you often create slide decks that contain tables, plots, or calculations from R code.\nr2pptx is a wrapper around officer. It wouldn’t be possible without officer developer David Gohel’s hard work. Thanks David!\nIn this post I’ll go through how to make basic and advanced presentations using r2pptx.\nInstallation First, you’ll need to install r2pptx. You can do so with\ninstall.packages(\"r2pptx\") # or you can install the development version from github # remotes::install_github(\"mattle24utils/r2pptx\") We’ll also load the ggplot2, dplyr, and flextable packages for this example. You don’t need any of these to use r2pptx, but you may find them useful.\n# install.packages(c(\"dplyr\", \"ggplot2\", \"flextable\")) library(ggplot2) library(dplyr) library(flextable) library(r2pptx)  Simple example First we need to choose a PowerPoint template. This is a normal .pptx file that has the template we want in Slide Master. By default, r2pptx uses the default template in officer. This seems like a slight variation on the default Microsoft PowerPoint template.\nLet’s start by creating a presentation.\npresentation  ## Presentation with 0 slides. print(template_path(presentation)) ## [1] \"/Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/officer/template/template.pptx\" We can see this is an empty presentation with the template path set to the default officer template. What’s in this template? We can check using some utility functions.\nget_layouts(presentation) ## layout master ## 1 Title Slide Office Theme ## 2 Title and Content Office Theme ## 3 Section Header Office Theme ## 4 Two Content Office Theme ## 5 Comparison Office Theme ## 6 Title Only Office Theme ## 7 Blank Office Theme This template has seven different layouts. That’s good to know, but we still don’t know which layout to use for which purpose. Let’s keep going!\nlayouts  Now we can see for each slide layout what options we have to use as placeholders! Knowing this, we can move forward and start constructing our presentation!\nIn r2pptx syntax, presentations consist of slides which consist of elements. elements represent anything we want to add to the deck. This could be text, plots, images, tables, etc. Anything compatible with the officer package works here!\nWe start out making a title slide with a title and subtitle. We give elements for the title and subtitle as arguments to the new_slide() function. And we give “Title Slide” as the layout name, per the information from above.\ntitle_slide  ## Slide with layout `Title Slide` and 2 elements: ## - character ## - character elements have two arguments. The key tells R where to place the element. Currently, this only supports a placeholder label. Placeholders are the objects in a PowerPoint slide layout (as seen above). Placeholder labels are the name of placeholders. Future development may allow other location specifications, such as giving x and y positions.\nNow we add the title slide to our presentation.\npresentation  ## Presentation with 1 slides. Easy!\nLet’s add another slide with a ggplot. This time, we’ll add the elements to the slide rather than initializing the slide with elements.\n# create the slide object plot_slide  ## Slide with layout `Title and Content` and 0 elements: ## - # create an element for the title element title_element  ## Slide with layout `Title and Content` and 2 elements: ## - character ## - gg presentation  ## Presentation with 2 slides. And then we can write the presentation to PowerPoint.\nppt_path  And you have a slide deck! Congrats! The deck should look like:\n Advanced example In a more advanced example, we may want to produce many similar slides. For example, we’ll use a dataset which has metrics on US Senators. In this example, we’d like to make a presentation that has one slide per state. Each state’s slide will have the same layout, but data specific to the given state.\nG. Elliott Morris has an R package called politicaldata which we will use to get DW Nominate scores for US Senators. DW Nominate is an academic project that calculates a score for each senator ranging from -1 to 1. A score of -1 indicates the senator is very far to the left, and a score of 1 indicates the senator is very far to the right. A score of 0 indicates the senator is in the middle of the left / right spectrum. There is more nuance, but we will ignore that in this example.\nLet’s install the politicaldata package, which contains the data we’ll use.\nremotes::install_github(\"elliottmorris/politicaldata\") And now we load the data into our R session.\nsenate_dw_df  We get a list of states to iterate over.\nstates % dplyr::inner_join(data.frame(state_abbrev = x), by = \"state_abbrev\") %% dplyr::pull(state_name) } I’m making some helper functions to deal with color scales – this is not important to understand.\n.transform_0_1 red color scale. values between -1 and 0 will be on a blue - # white color scale color_scale_fn  Now we can loop through each state to make 50 slides. For each state, we’ll make one slide. The slide will have a plot showing how the state’s Senators’ DW Nominate scores have changed over time and a table showing the scores for recent Senators.\n# make a slidelist - a new class of object that is a helpful way to hold slides # that aren't part of a presentation yet slide_list % dplyr::filter(state_abbrev == !!state) # make the table dw_recent_table % dplyr::filter(state_abbrev == !!state) %% dplyr::arrange(-year) %% dplyr::slice(1:10) %% dplyr::select(year, bioname, nominate_dim1) %% flextable() %% set_formatter(year = as.character) %% bg(j = 3, bg = color_scale_fn) %% set_header_labels( year = \"Year\", bioname = \"Name\", nominate_dim1 = \"DW Nominate (1)\" ) %% # placeholder 2 width is 4.416667 width(j = 2, width = 2.5) %% width(j = 3, width = 1) %% width(j = 1, width = 4.416667 - 1 - 2.5) # make the time series plot dw_time_series_plot  Last, we write the presentation as a PowerPoint file and open it!\nppt_path  The first few slides should look like:\nSlide with a plot and table for Arkansas\n I hope this has shown the power and flexability of r2pptx! You can find more documentation at the package’s website, linked here.\n ",
   "wordCount" : "1412",
   "inLanguage": "en",
-  "datePublished": "2021-09-02T00:00:00Z",
-  "dateModified": "2021-09-02T00:00:00Z",
+  "datePublished": "2021-09-15T00:00:00Z",
+  "dateModified": "2021-09-15T00:00:00Z",
   "author":{
     "@type": "Person",
     "name": "Matt Lehman"
@@ -192,7 +192,7 @@ In this post I’ll go through how to make basic and advanced presentations usin
     <h1 class="post-title">
       Releasing r2pptx on CRAN
     </h1>
-    <div class="post-meta">September 2, 2021&nbsp;·&nbsp;Matt Lehman
+    <div class="post-meta">September 15, 2021&nbsp;·&nbsp;Matt Lehman
 </div>
   </header> 
   <div class="post-content">
@@ -445,11 +445,6 @@ documentation at the package’s website, <a href="https://mattle24.github.io/r2
     <ul class="post-tags">
       <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/r/">R</a></li>
       <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/r2pptx/">r2pptx</a></li>
-      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/cran/">CRAN</a></li>
-      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/officer/">officer</a></li>
-      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/powerpoint/">PowerPoint</a></li>
-      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/slides/">slides</a></li>
-      <li><a href="https://mattle24.github.io/mattle24_blog/public/tags/deck/">deck</a></li>
     </ul>
   </footer>
 </article>
