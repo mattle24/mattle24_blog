@@ -31,7 +31,7 @@ First, you'll need to install `r2pptx`. You can do so with
 ```{r, eval=FALSE}
 install.packages("r2pptx")
 # or you can install the development version from github
-# remotes::install_github("mattle24utils/r2pptx")
+# remotes::install_github("mattle24/r2pptx")
 ```
 
 We'll also load the `ggplot2`, `dplyr`, and `flextable` packages for this example. You don't need any of these to use `r2pptx`, but you may find them useful.
