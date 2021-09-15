@@ -7,6 +7,10 @@ tags: ["R", "r2pptx"]
 output:
   blogdown::html_page:
     toc: true
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: yes
 ---
 
 I'm excited to have the [`r2pptx`](https://mattle24.github.io/r2pptx/) package
